@@ -9,6 +9,8 @@ namespace AddressBookAdo.net
             Console.WriteLine("Welcome message to Addressbook ADO.Net");
             AddressBookRepo check = new AddressBookRepo();
             check.CheckConnection();
+            AddressBookRepo repo = new AddressBookRepo();
+            repo.CreateTable();
         }
     }
 }
