@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -29,6 +30,7 @@ namespace AddressBookAdo.net
                 Console.WriteLine("connection close");
             }
         }
+        //UC2-Create table
         public void CreateTable()//create table
         {
             try
@@ -72,6 +74,49 @@ namespace AddressBookAdo.net
                 Console.WriteLine($"sorry!!! {e}");
             }
         }
+        //UC3-Insert new Contacts into addressbook.
+        public bool Addcontatct(AddressBookModel data)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("Sp_AddContactDetails", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@first_name", data.first_name);
+                    command.Parameters.AddWithValue("@last_name", data.last_name);
+                    command.Parameters.AddWithValue("@address", data.address);
+                    command.Parameters.AddWithValue("@city", data.city);
+                    command.Parameters.AddWithValue("@state", data.state);
+                    command.Parameters.AddWithValue("@zip", data.zip);
+                    command.Parameters.AddWithValue("@phone_number", data.phone_number);
+                    command.Parameters.AddWithValue("@email", data.email);
+                    command.Parameters.AddWithValue("@addressbook_name", data.addressbook_name);
+                    command.Parameters.AddWithValue("@addressbook_type", data.addressbook_type);
+                    connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    connection.Close();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+                Console.WriteLine("connection close");
+            }
+        }
+
     }
 }
 
