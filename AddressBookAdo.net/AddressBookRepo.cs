@@ -287,5 +287,54 @@ namespace AddressBookAdo.net
                 connection.Close();
             }
         }
+        /// <summary>
+        ///Sorted records alphabetically 
+        /// </summary>
+        public void SortedRecordsAlphabeticallyByFirstName()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                AddressBookModel model = new AddressBookModel();
+                using (connection)
+                {
+                    string query = @"select * from AddressBookDetails where City='Margao' order by FirstName;";
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            model.first_name = reader.GetString(0);
+                            model.last_name = reader.GetString(1);
+                            model.address = reader.GetString(2);
+                            model.city = reader.GetString(3);
+                            model.state = reader.GetString(4);
+                            model.zip = reader.GetInt32(5);
+                            model.phone_number = reader.GetString(6);
+                            model.email = reader.GetString(7);
+                            Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7}", model.first_name, model.last_name, model.address, model.city, model.state, model.zip, model.phone_number, model.email);
+                            Console.WriteLine("\n");
+                        }
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("No Data Found");
+                    }
+                    reader.Close();
+                    connection.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }

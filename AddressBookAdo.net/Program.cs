@@ -27,7 +27,7 @@ namespace AddressBookAdo.net
             //addressBookRepo.RetriveRecordsByCityOrState();
             addressBookRepo.CountByCityOrState();
             addressBookRepo.AddressBookSizeByCityANDState();
-
+            addressBookRepo.SortedRecordsAlphabeticallyByFirstName();
 
 
         }
