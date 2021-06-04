@@ -21,11 +21,11 @@ namespace AddressBookAdo.net
            model.addressbook_name = "AddressBook1";
            model.addressbook_type = "Profession";
             //addressBookRepo.CheckConnection();
-            //addressBookRepo.Addcontatct(model);
+            addressBookRepo.Addcontatct(model);
             //addressBookRepo.EditContactUsingPersonName(model);
             //addressBookRepo.DeleteContactUsingName(model);
-            addressBookRepo.RetriveRecordsByCityOrState();
-
+            //addressBookRepo.RetriveRecordsByCityOrState();
+            addressBookRepo.CountByCityOrState();
 
 
         }

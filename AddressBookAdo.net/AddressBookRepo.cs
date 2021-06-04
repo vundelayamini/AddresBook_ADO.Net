@@ -151,7 +151,7 @@ namespace AddressBookAdo.net
         /// <summary>
         /// Retrive person in city or state
         /// </summary>
-        public void RetriveRecordsByCityOrState()
+        public void CountByCityOrState()
         {
             SqlConnection connection = new SqlConnection(connectionString);
             try
@@ -194,6 +194,54 @@ namespace AddressBookAdo.net
                 connection.Close();
             }
         }
-
+        /// <summary>
+        /// Count by city or state
+        /// </summary>
+        public void CountByCityAndState()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                AddressBookModel addressBookModel = new AddressBookModel();
+                using (connection)
+                {
+                    using (SqlCommand command = new SqlCommand(
+                        @"select city,COUNT(city)from AddressBookDetails group by city;
+                        select state, COUNT(state)from AddressBookDetails group by state; ", connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader sqlDataReader = command.ExecuteReader())
+                        {
+                            while (sqlDataReader.Read())
+                            {
+                                addressBookModel.city = sqlDataReader.GetString(0);
+                                int countCIty = sqlDataReader.GetInt32(1);
+                                Console.WriteLine("{0},{1}", addressBookModel.city, countCIty);
+                                Console.WriteLine("\n");
+                            }
+                            if (sqlDataReader.NextResult())
+                            {
+                                while (sqlDataReader.Read())
+                                {
+                                    addressBookModel.state = sqlDataReader.GetString(0);
+                                    int stateCount = sqlDataReader.GetInt32(1);
+                                    Console.WriteLine("{0},{1}", addressBookModel.state, stateCount);
+                                    Console.WriteLine("\n");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
+
 }
