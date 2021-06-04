@@ -160,8 +160,8 @@ namespace AddressBookAdo.net
                 using (connection)
                 {
                     using (SqlCommand command = new SqlCommand(
-                        @"SELECT * FROM AddreshBookADo WHERE city = 'Rushitha' OR state = 'Telangana';
-                        SELECT * FROM AddreshBookADo WHERE city = 'Sunil' OR state = 'KA'; ", connection))
+                        @"SELECT * FROM AddreshBookADo WHERE city = 'Hyderabad' OR state = 'Telangana';
+                        SELECT * FROM AddreshBookADo WHERE city = 'Banglore' OR state = 'KA'; ", connection))
                     {
                         connection.Open();
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -242,6 +242,50 @@ namespace AddressBookAdo.net
                 connection.Close();
             }
         }
+        /// <summary>
+        /// Size of the addressbook by city and state
+        /// </summary>
+        public void AddressBookSizeByCityANDState()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    using (SqlCommand command = new SqlCommand(
+                        @"SELECT COUNT(first_name) FROM AddreshBookADo WHERE city = 'Hyderabad' AND state = 'Telangana'; 
+                        SELECT COUNT(first_name) FROM AddreshBookADo WHERE city = 'Banglore' AND state = 'KA';", connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var count = reader.GetInt32(0);
+                                Console.WriteLine($"Number of Persons belonging to City 'Hyderabad' And  'Telangana' : {count}");
+                                Console.WriteLine("\n");
+                            }
+                            if (reader.NextResult())
+                            {
+                                while (reader.Read())
+                                {
+                                    var count = reader.GetInt32(0);
+                                    Console.WriteLine($"Number of Persons belonging to City 'Banglore' And State 'KA' : {count}");
+                                    Console.WriteLine("\n");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
-
 }

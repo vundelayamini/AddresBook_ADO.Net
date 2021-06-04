@@ -26,6 +26,8 @@ namespace AddressBookAdo.net
             //addressBookRepo.DeleteContactUsingName(model);
             //addressBookRepo.RetriveRecordsByCityOrState();
             addressBookRepo.CountByCityOrState();
+            addressBookRepo.AddressBookSizeByCityANDState();
+
 
 
         }
