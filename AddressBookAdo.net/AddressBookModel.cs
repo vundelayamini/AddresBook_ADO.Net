@@ -18,4 +18,4 @@ namespace AddressBookAdo.net
         public string addressbook_type { get; set; }
     }
 }
-}
+

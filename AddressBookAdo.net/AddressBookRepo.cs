@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 using System.Text;
 
 namespace AddressBookAdo.net
@@ -85,7 +87,7 @@ namespace AddressBookAdo.net
         /// </summary>
         /// <param name="model"></param>
         public void EditContactUsingPersonName(AddressBookModel model)
-           
+
         {
             SqlConnection connection = new SqlConnection(connectionString);
             try
@@ -146,12 +148,52 @@ namespace AddressBookAdo.net
                 connection.Close();
             }
         }
+        /// <summary>
+        /// Retrive person in city or state
+        /// </summary>
+        public void RetriveRecordsByCityOrState()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                AddressBookModel model = new AddressBookModel();
+                using (connection)
+                {
+                    using (SqlCommand command = new SqlCommand(
+                        @"SELECT * FROM AddreshBookADo WHERE city = 'Rushitha' OR state = 'Telangana';
+                        SELECT * FROM AddreshBookADo WHERE city = 'Sunil' OR state = 'KA'; ", connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                {
+                                    model.first_name = reader.GetString(0);
+                                    model.last_name = reader.GetString(1);
+                                    model.address = reader.GetString(2);
+                                    model.city = reader.GetString(3);
+                                    model.state = reader.GetString(4);
+                                    model.zip = reader.GetInt32(5);
+                                    model.phone_number = reader.GetString(6);
+                                    model.email = reader.GetString(7);
+                                    Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7}", model.first_name, model.last_name, model.address, model.city, model.state, model.zip, model.phone_number, model.email);
+                                    Console.WriteLine("\n");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
 
     }
-
 }
-
-
-
-
-    

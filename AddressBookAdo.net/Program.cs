@@ -20,17 +20,11 @@ namespace AddressBookAdo.net
            model.email = "Sunil1234@gmail.com";
            model.addressbook_name = "AddressBook1";
            model.addressbook_type = "Profession";
-            addressBookRepo.CheckConnection();
-            addressBookRepo.Addcontatct(model);
-
-            addressBookRepo.CheckConnection();
-             addressBookRepo.Addcontatct(model);
-
-            // addressBookRepo.EditContactUsingName(addressBookModel, "Sunil");
-            // addressBookRepo.DeleteContactUsingFirstName("Sunil");
-
-            addressBookRepo.Addcontatct(model);
-            addressBookRepo.DeleteContactUsingName("Sneha");
+            //addressBookRepo.CheckConnection();
+            //addressBookRepo.Addcontatct(model);
+            //addressBookRepo.EditContactUsingPersonName(model);
+            //addressBookRepo.DeleteContactUsingName(model);
+            addressBookRepo.RetriveRecordsByCityOrState();
 
 
 
