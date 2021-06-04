@@ -336,5 +336,52 @@ namespace AddressBookAdo.net
                 connection.Close();
             }
         }
+        /// <summary>
+        /// Get number of persons identify each Address Book with name and Type. 
+        /// </summary>
+        public void GetNumberOfPersonsCountByType()
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    using (SqlCommand command = new SqlCommand(
+                        @"SELECT COUNT(first_name) FROM AddreshBookADo WHERE addressbook_type = 'Family'; 
+                        SELECT COUNT(first_name) FROM AddreshBookADo WHERE addressbook_type = 'Friends';", connection))
+                    {
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var count = reader.GetInt32(0);
+                                Console.WriteLine("Number of Persons belonging to Addressbook Type 'Family' : {0}", count);
+                                Console.WriteLine("\n");
+                            }
+                            if (reader.NextResult())
+                            {
+                                while (reader.Read())
+                                {
+                                    var count = reader.GetInt32(0);
+                                    Console.WriteLine("Number of Persons belonging to Addressbook Type 'Friends' : {0}", count);
+                                    Console.WriteLine("\n");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }
+
+

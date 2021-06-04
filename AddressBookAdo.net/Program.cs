@@ -28,6 +28,7 @@ namespace AddressBookAdo.net
             addressBookRepo.CountByCityOrState();
             addressBookRepo.AddressBookSizeByCityANDState();
             addressBookRepo.SortedRecordsAlphabeticallyByFirstName();
+            addressBookRepo.GetNumberOfPersonsCountByType();
 
 
         }
