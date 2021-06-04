@@ -381,7 +381,71 @@ namespace AddressBookAdo.net
                 connection.Close();
             }
         }
+        /// <summary>
+        /// Add persons as friends and family
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool AddPersonAsFriendAndFamily(AddressBookModel model)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    SqlCommand cmd = new SqlCommand("spCRUDoperations", connection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@FirstName", model.first_name);
+                    cmd.Parameters.AddWithValue("@LastName", model.last_name);
+                    cmd.Parameters.AddWithValue("@Address", model.address);
+                    cmd.Parameters.AddWithValue("@City", model.city);
+                    cmd.Parameters.AddWithValue("@State", model.state);
+                    cmd.Parameters.AddWithValue("@Zip", model.zip);
+                    cmd.Parameters.AddWithValue("@PhoneNumber", model.phone_number);
+                    cmd.Parameters.AddWithValue("@Email", model.email);
+                    cmd.Parameters.AddWithValue("@AddressBookName", model.addressbook_name);
+                    cmd.Parameters.AddWithValue("@AddressBookType",model.addressbook_type);
+                    connection.Open();
+                    var result = cmd.ExecuteNonQuery();
+                    connection.Close();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+
+                    SqlCommand cmd1 = new SqlCommand("spCRUDoperations", connection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@FirstName", model.first_name);
+                    cmd.Parameters.AddWithValue("@LastName", model.last_name);
+                    cmd.Parameters.AddWithValue("@Address", model.address);
+                    cmd.Parameters.AddWithValue("@City", model.city);
+                    cmd.Parameters.AddWithValue("@State", model.state);
+                    cmd.Parameters.AddWithValue("@Zip", model.zip);
+                    cmd.Parameters.AddWithValue("@PhoneNumber", model.phone_number);
+                    cmd.Parameters.AddWithValue("@Email", model.email);
+                    cmd.Parameters.AddWithValue("@AddressBookName", model.addressbook_name);
+                    cmd.Parameters.AddWithValue("@AddressBookType", model.addressbook_type);
+                    connection.Open();
+                    var result1 = cmd.ExecuteNonQuery();
+                    connection.Close();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
     }
 }
+   
 
 

@@ -25,10 +25,11 @@ namespace AddressBookAdo.net
             //addressBookRepo.EditContactUsingPersonName(model);
             //addressBookRepo.DeleteContactUsingName(model);
             //addressBookRepo.RetriveRecordsByCityOrState();
-            addressBookRepo.CountByCityOrState();
-            addressBookRepo.AddressBookSizeByCityANDState();
-            addressBookRepo.SortedRecordsAlphabeticallyByFirstName();
-            addressBookRepo.GetNumberOfPersonsCountByType();
+            //addressBookRepo.CountByCityOrState();
+            //addressBookRepo.AddressBookSizeByCityANDState();
+            //addressBookRepo.SortedRecordsAlphabeticallyByFirstName();
+            //addressBookRepo.GetNumberOfPersonsCountByType();
+            addressBookRepo.AddPersonAsFriendAndFamily(model);
 
 
         }
